@@ -22,7 +22,7 @@ if (environment === 'development') {
 } else {
   // mongo atlas
   // mongoose.connect(
-  //   `mongodb+srv://yeukfei02:${process.env.MONGO_ATLAS_PASSWORD}@lunch-picker-goksl.mongodb.net/test?retryWrites=true&w=majority`,
+  //   `mongodb+srv://yeukfei02:${process.env.MONGO_ATLAS_PASSWORD}@ordersapi-yrvwg.mongodb.net/test?retryWrites=true&w=majority`,
   //   { useNewUrlParser: true, useUnifiedTopology: true },
   // );
 
