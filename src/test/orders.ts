@@ -22,7 +22,7 @@ export const getOrdersTest = async () => {
 };
 
 export const updateOrdersByIdTest = async () => {
-  const lastItem = await Orders.findOne().sort({ created_at: -1 });
+  const lastItem = await Orders.findOne().sort({ created_by: -1 });
   const lastItemId = lastItem.get('_id');
 
   const result = await Orders.findOneAndUpdate(
