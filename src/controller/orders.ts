@@ -31,8 +31,7 @@ export const createOrders = async (req: Request, res: Response) => {
     const originsStr = `${originLatitude},${originLongitude}`;
     const destinationStr = `${destinationLatitude},${destinationLongitude}`;
     const result = await getDistance(originsStr, destinationStr);
-    if (result && result.rows)
-      distance = result.rows[0].elements[0].distance.text;
+    if (result && result.rows) distance = result.rows[0].elements[0].distance.text;
 
     const orders = new Orders({
       _id: id,
