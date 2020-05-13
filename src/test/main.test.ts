@@ -1,7 +1,8 @@
-import * as orders from './orders';
 import * as mongoose from 'mongoose';
 import * as express from 'express';
 const app = express();
+
+import * as orders from './orders';
 
 mongoose.set('useFindAndModify', false);
 
