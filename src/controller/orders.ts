@@ -1,7 +1,19 @@
 import { Request, Response } from 'express';
 import * as mongoose from 'mongoose';
+import axios from 'axios';
 
 import Orders from '../model/orders';
+
+async function getDistance(originsStr: string, destinationStr: string) {
+  const result = await axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json`, {
+    params: {
+      origins: originsStr,
+      destinations: destinationStr,
+      key: process.env.GOOGLE_MAP_API_KEY,
+    },
+  });
+  return result.data;
+}
 
 export const createOrders = async (req: Request, res: Response) => {
   const originList = req.body.origin;
@@ -12,9 +24,15 @@ export const createOrders = async (req: Request, res: Response) => {
     const originLatitude = originList[0];
     const originLongitude = originList[1];
     const destinationLatitude = destinationList[0];
-    const destinationLongitude = destinationList[0];
-    const distance = '100';
+    const destinationLongitude = destinationList[1];
+    let distance = 'NO RESULT';
     const status = 'UNASSIGNED';
+
+    const originsStr = `${originLatitude},${originLongitude}`;
+    const destinationStr = `${destinationLatitude},${destinationLongitude}`;
+    const result = await getDistance(originsStr, destinationStr);
+    if (result && result.rows)
+      distance = result.rows[0].elements[0].distance.text;
 
     const orders = new Orders({
       _id: id,
@@ -81,17 +99,25 @@ export const updateOrdersById = async (req: Request, res: Response) => {
 
   try {
     if (id) {
-      const result = await Orders.findOneAndUpdate(
-        { _id: id },
-        {
-          $set: {
-            status: status,
+      const order = await Orders.findById(id);
+      const stutus = order.get('status');
+      if (stutus !== 'TAKEN') {
+        const result = await Orders.findOneAndUpdate(
+          { _id: id },
+          {
+            $set: {
+              status: status,
+            },
           },
-        },
-      );
-      if (result) {
-        res.status(200).json({
-          status: 'SUCCESS',
+        );
+        if (result) {
+          res.status(200).json({
+            status: 'SUCCESS',
+          });
+        }
+      } else {
+        res.status(400).json({
+          error: 'ERROR_DESCRIPTION',
         });
       }
     }
