@@ -31,7 +31,7 @@ export const createOrders = async (req: Request, res: Response) => {
     const originsStr = `${originLatitude},${originLongitude}`;
     const destinationStr = `${destinationLatitude},${destinationLongitude}`;
     const result = await getDistance(originsStr, destinationStr);
-    if (result && result.rows) distance = result.rows[0].elements[0].distance.text;
+    if (result && result.rows) distance = result.rows[0].elements[0].distance.value;
 
     const orders = new Orders({
       _id: id,
@@ -57,19 +57,21 @@ export const createOrders = async (req: Request, res: Response) => {
 };
 
 export const getOrders = async (req: Request, res: Response) => {
-  const page = req.query.page ? parseInt(req.query.page.toString(), 10) : null;
-  const limit = req.query.limit ? parseInt(req.query.limit.toString(), 10) : null;
+  const page = req.query.page && !isNaN(parseInt(req.query.page.toString(), 10)) ? parseInt(req.query.page.toString(), 10) : null;
+  const limit = req.query.limit && !isNaN(parseInt(req.query.limit.toString(), 10)) ? parseInt(req.query.limit.toString(), 10) : null;
 
   try {
     let resultList: any[] = [];
     let ordersList: any[] = [];
 
-    if (!page && !limit) {
-      ordersList = await Orders.find({});
-    } else {
+    if (page != null && limit != null) {
       ordersList = await Orders.find({})
         .skip(page * limit - limit)
         .limit(limit);
+    } else {
+      res.status(400).json({
+        error: 'ERROR_DESCRIPTION',
+      });
     }
 
     if (ordersList) {
