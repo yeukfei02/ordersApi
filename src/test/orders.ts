@@ -25,7 +25,7 @@ export const updateOrdersByIdTest = async () => {
   const lastItem = await Orders.findOne().sort({ created_by: -1 });
   const lastItemId = lastItem.get('_id');
 
-  const result = await Orders.findOneAndUpdate(
+  await Orders.findOneAndUpdate(
     { _id: lastItemId },
     {
       $set: {
@@ -33,5 +33,7 @@ export const updateOrdersByIdTest = async () => {
       },
     },
   );
-  return result;
+
+  const newLastItem = await Orders.findOne().sort({ created_by: -1 });
+  return newLastItem;
 };
