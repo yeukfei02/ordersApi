@@ -13,28 +13,28 @@ export const createOrders = async (req: Request, res: Response) => {
     const originLongitude = originList[1];
     const destinationLatitude = destinationList[0];
     const destinationLongitude = destinationList[0];
-    const distance = "100";
-    const status = "UNASSIGNED";
+    const distance = '100';
+    const status = 'UNASSIGNED';
 
     const orders = new Orders({
       _id: id,
-      originLatitude: originLatitude,
-      originLongitude: originLongitude,
-      destinationLatitude: destinationLatitude,
-      destinationLongitude: destinationLongitude,
+      origin_latitude: originLatitude,
+      origin_longitude: originLongitude,
+      destination_latitude: destinationLatitude,
+      destination_longitude: destinationLongitude,
       distance: distance,
-      status: status
+      status: status,
     });
     await orders.save();
 
     res.status(200).json({
-        id: id,
-        distance: distance,
-        status: status
+      id: id,
+      distance: distance,
+      status: status,
     });
   } else {
     res.status(400).json({
-        error: "ERROR_DESCRIPTION"
+      error: 'ERROR_DESCRIPTION',
     });
   }
 };
@@ -50,15 +50,17 @@ export const getOrders = async (req: Request, res: Response) => {
     if (!page && !limit) {
       ordersList = await Orders.find({});
     } else {
-      ordersList = await Orders.find({}).skip(page * limit - limit).limit(limit);
+      ordersList = await Orders.find({})
+        .skip(page * limit - limit)
+        .limit(limit);
     }
 
     if (ordersList) {
       resultList = ordersList.map((item: any, i: number) => {
-        let obj = {
+        const obj = {
           id: item.id,
           distance: item.distance,
-          status: item.status
+          status: item.status,
         };
         return obj;
       });
@@ -66,9 +68,9 @@ export const getOrders = async (req: Request, res: Response) => {
 
     res.status(200).json(resultList);
   } catch (e) {
-    console.log("error = ", e.message);
+    console.log('error = ', e.message);
     res.status(400).json({
-        error: "ERROR_DESCRIPTION"
+      error: 'ERROR_DESCRIPTION',
     });
   }
 };
@@ -83,20 +85,20 @@ export const updateOrdersById = async (req: Request, res: Response) => {
         { _id: id },
         {
           $set: {
-            status: status
-          }
-        }
+            status: status,
+          },
+        },
       );
       if (result) {
         res.status(200).json({
-          status: "SUCCESS"
+          status: 'SUCCESS',
         });
       }
     }
   } catch (e) {
-    console.log("error = ", e.message);
+    console.log('error = ', e.message);
     res.status(400).json({
-        error: "ERROR_DESCRIPTION"
+      error: 'ERROR_DESCRIPTION',
     });
   }
 };

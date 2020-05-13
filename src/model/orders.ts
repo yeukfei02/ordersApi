@@ -7,10 +7,10 @@ const currentDateWithTimezone = moment.tz(moment().format(), userTimezone);
 
 const ordersSchema = new mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
-  originLatitude: { type: String, required: true },
-  originLongitude: { type: String, required: true },
-  destinationLatitude: { type: String, required: true },
-  destinationLongitude: { type: String, required: true },
+  origin_latitude: { type: String, required: true },
+  origin_longitude: { type: String, required: true },
+  destination_latitude: { type: String, required: true },
+  destination_longitude: { type: String, required: true },
   distance: { type: String, required: true },
   status: { type: String, required: true },
   created_by: { type: Date, default: currentDateWithTimezone },
