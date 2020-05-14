@@ -67,12 +67,12 @@ export const createOrders = async (req: Request, res: Response) => {
       });
     } else {
       res.status(400).json({
-        error: 'ERROR_DESCRIPTION',
+        error: 'lat / lng is not valid',
       });
     }
   } else {
     res.status(400).json({
-      error: 'ERROR_DESCRIPTION',
+      error: 'origin and destination cannot be empty',
     });
   }
 };
@@ -95,7 +95,7 @@ export const getOrders = async (req: Request, res: Response) => {
         .limit(limit);
     } else {
       res.status(400).json({
-        error: 'ERROR_DESCRIPTION',
+        error: 'page and limit cannot be null',
       });
     }
 
@@ -114,7 +114,7 @@ export const getOrders = async (req: Request, res: Response) => {
   } catch (e) {
     console.log('error = ', e.message);
     res.status(400).json({
-      error: 'ERROR_DESCRIPTION',
+      error: `${e.message}`,
     });
   }
 };
@@ -143,14 +143,14 @@ export const updateOrdersById = async (req: Request, res: Response) => {
         }
       } else {
         res.status(400).json({
-          error: 'ERROR_DESCRIPTION',
+          error: 'stutus is already TAKEN',
         });
       }
     }
   } catch (e) {
     console.log('error = ', e.message);
     res.status(400).json({
-      error: 'ERROR_DESCRIPTION',
+      error: `${e.message}`,
     });
   }
 };
