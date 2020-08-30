@@ -3,7 +3,7 @@ import * as mongoose from 'mongoose';
 
 mongoose.set('useFindAndModify', false);
 
-export const connectDB = async (app: Express) => {
+export const connectDB = async (app: Express): Promise<void> => {
   const environment = app.get('env');
   if (environment === 'development') {
     // mongo local db

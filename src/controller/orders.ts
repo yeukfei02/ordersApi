@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import Orders from '../model/orders';
 
-async function getDistance(originsStr: string, destinationStr: string) {
+async function getDistance(originsStr: string, destinationStr: string): Promise<any> {
   const result = await axios.get(`https://maps.googleapis.com/maps/api/distancematrix/json`, {
     params: {
       origins: originsStr,
@@ -15,7 +15,7 @@ async function getDistance(originsStr: string, destinationStr: string) {
   return result.data;
 }
 
-export const createOrders = async (req: Request, res: Response) => {
+export const createOrders = async (req: Request, res: Response): Promise<void> => {
   const originList = req.body.origin;
   const destinationList = req.body.destination;
 
@@ -77,7 +77,7 @@ export const createOrders = async (req: Request, res: Response) => {
   }
 };
 
-export const getOrders = async (req: Request, res: Response) => {
+export const getOrders = async (req: Request, res: Response): Promise<void> => {
   const page =
     req.query.page && !isNaN(parseInt(req.query.page.toString(), 10)) ? parseInt(req.query.page.toString(), 10) : null;
   const limit =
@@ -119,7 +119,7 @@ export const getOrders = async (req: Request, res: Response) => {
   }
 };
 
-export const updateOrdersById = async (req: Request, res: Response) => {
+export const updateOrdersById = async (req: Request, res: Response): Promise<void> => {
   const id = req.params.id;
   const status = req.body.status;
 
