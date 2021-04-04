@@ -1,7 +1,7 @@
-import * as mongoose from 'mongoose';
-import * as express from 'express';
+import mongoose from 'mongoose';
+import express from 'express';
 
-import * as orders from './orders';
+import orders from './orders';
 
 const app = express();
 
