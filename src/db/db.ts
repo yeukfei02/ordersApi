@@ -1,5 +1,5 @@
 import { Express } from 'express';
-import * as mongoose from 'mongoose';
+import mongoose from 'mongoose';
 
 mongoose.set('useFindAndModify', false);
 
