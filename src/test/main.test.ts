@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import express from 'express';
 
-import orders from './orders';
+import { createOrdersTest, getOrdersTest, updateOrdersByIdTest } from './orders';
 
 const app = express();
 
@@ -28,20 +28,20 @@ describe('main.test', () => {
 
   describe('orders', () => {
     test('createOrders', async () => {
-      const result = await orders.createOrdersTest();
+      const result = await createOrdersTest();
       console.log('result = ', result);
       expect(result).toBeDefined();
     });
 
     test('getOrders', async () => {
-      const result = await orders.getOrdersTest();
+      const result = await getOrdersTest();
       console.log('result = ', result);
       expect(result).toBeDefined();
       expect(result.length > 0).toBeTruthy();
     });
 
     test('updateOrdersById', async () => {
-      const result = await orders.updateOrdersByIdTest();
+      const result = await updateOrdersByIdTest();
       console.log('result = ', result);
       expect(result).toBeDefined();
       expect(result.get('status')).toEqual('TAKEN');
