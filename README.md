@@ -7,7 +7,7 @@ documentation: <https://documenter.getpostman.com/view/3827865/SzmiXG3c?version=
 ## Requirement
 
 - install yarn
-- install node (v12+)
+- install node (v14+)
 - install mongodb
 
 ## Testing and run
